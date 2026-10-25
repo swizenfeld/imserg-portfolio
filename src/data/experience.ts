@@ -10,5 +10,6 @@ export const experience = [
 
 export const links = {
   linkedin: 'https://www.linkedin.com/in/swizenfeld/',
-  resume: '/Sergio-Wizenfeld-Resume.pdf',
+  // TODO: copy the PDF into public/ and point this at '/Sergio-Wizenfeld-Resume.pdf' before leaving WordPress.
+  resume: 'https://imserg.io/wp-content/uploads/2025/10/Sergio-Wizenfelds-Resume.pdf',
 };

@@ -12,7 +12,10 @@ const work = defineCollection({
     year: z.number(),
     role: z.string(),
     team: z.string().optional(),
+    tagline: z.string().optional(),
     cover: z.string().optional(),
+    // Headline results, shown as a row on the case study page.
+    impact: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
     order: z.number().default(99),
     draft: z.boolean().default(false),
   }),
