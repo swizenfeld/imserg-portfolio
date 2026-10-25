@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import { links } from '../data/experience';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Sergio Wizenfeld — Product Design Manager',
+  description = 'Sergio Wizenfeld leads product design for consumer credit and money products at Experian.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-head wrap">
+      <a class="name" href="/">Sergio Wizenfeld</a>
+      <nav aria-label="Main">
+        <a href="/#work">Work</a>
+        <a href="/#experience">Experience</a>
+        <a href={links.resume}>Resume</a>
+        <a href={links.linkedin}>LinkedIn</a>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-foot wrap">
+      <p>Want to talk about a design leadership role? <a href={links.linkedin}>Message me on LinkedIn</a>.</p>
+      <p class="small">© {new Date().getFullYear()} Sergio Wizenfeld</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-block: 1.5rem;
+  }
+  .name {
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+  nav a {
+    color: var(--slate);
+    text-decoration: none;
+  }
+  nav a:hover { color: var(--ink); }
+  .site-foot {
+    border-top: 1px solid var(--line);
+    margin-top: 6rem;
+    padding-block: 2.5rem 3rem;
+    font-size: var(--step-1);
+  }
+  .site-foot a { color: var(--cobalt); }
+  .site-foot p { margin: 0 0 0.5rem; max-width: 34ch; }
+  .site-foot .small { font-size: var(--step--1); color: var(--slate); margin-top: 1.5rem; }
+</style>

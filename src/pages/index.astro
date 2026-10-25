@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { experience, links } from '../data/experience';
+
+const work = (await getCollection('work', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<Base>
+  <section class="hero wrap" aria-labelledby="intro">
+    <h1 id="intro">
+      I lead a team of six designers building Experian’s consumer credit and money products.
+    </h1>
+    <p class="lede">
+      Senior Product Design Manager at Experian. I started there as a senior designer in 2016,
+      and today I run design for the mobile app, from the icon system to premium dashboards.
+    </p>
+  </section>
+
+  <section id="work" class="work wrap" aria-labelledby="work-heading">
+    <h2 id="work-heading" class="section-title">Selected work</h2>
+    <ul class="index" role="list">
+      {work.map((item) => (
+        <li>
+          <a href={`/work/${item.id}/`} class="row">
+            <span class="row-title">{item.data.title}</span>
+            <span class="row-outcome">{item.data.outcome}</span>
+            <span class="row-meta">{item.data.company}, {item.data.year}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="experience" class="exp wrap" aria-labelledby="exp-heading">
+    <h2 id="exp-heading" class="section-title">Experience</h2>
+    <ol class="timeline" role="list">
+      {experience.map((job) => (
+        <li>
+          <span class="years">{job.start}–{job.end}</span>
+          <span class="job">{job.title}</span>
+          <span class="co">{job.company}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="exp-links">
+      <a href={links.resume}>Download my resume (PDF)</a>
+      <a href={links.linkedin}>See the full history on LinkedIn</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 10vw, 8rem) clamp(3rem, 8vw, 6rem);
+  }
+  h1 {
+    font-size: var(--step-4);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    margin: 0;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: var(--step-1);
+    color: var(--slate);
+    max-width: 40ch;
+    margin: 2rem 0 0;
+  }
+
+  .section-title {
+    font-size: var(--step-0);
+    font-weight: 600;
+    color: var(--slate);
+    margin: 0 0 1rem;
+  }
+
+  .index {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .index li { border-bottom: 1px solid var(--line); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
+    gap: 0.5rem 2rem;
+    align-items: baseline;
+    padding-block: 1.5rem;
+    text-decoration: none;
+  }
+  .row-title {
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.12em;
+    transition: text-decoration-color 160ms ease, color 160ms ease;
+  }
+  .row:hover .row-title,
+  .row:focus-visible .row-title {
+    color: var(--cobalt);
+    text-decoration-color: currentColor;
+  }
+  .row-outcome { color: var(--slate); max-width: 38ch; }
+  .row-meta { color: var(--slate); font-size: var(--step--1); white-space: nowrap; }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr; }
+    .row-meta { order: -1; }
+  }
+
+  .exp { margin-top: clamp(4rem, 10vw, 7rem); }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr) minmax(0, 12rem);
+    gap: 0.25rem 1.5rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .years { color: var(--slate); font-variant-numeric: tabular-nums; }
+  .job { font-weight: 600; }
+  .co { color: var(--slate); }
+  @media (max-width: 600px) {
+    .timeline li { grid-template-columns: 1fr; }
+  }
+  .exp-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-top: 1.5rem;
+  }
+  .exp-links a { color: var(--cobalt); }
+</style>
